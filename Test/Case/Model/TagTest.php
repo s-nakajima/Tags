@@ -205,12 +205,28 @@ class TagTest extends TagsAppTest {
 		$this->Tag->cleanUp($FakeModel, $blockId);
 		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
 		$this->assertEquals(count($tags), 4);
+
 		$FakeModel->delete($contentId);
 
 		// 元コンテンツが削除されたので関連するコンテンツのなくなったタグは削除される
 		$this->Tag->cleanUp($FakeModel, $blockId);
 		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
 		$this->assertEquals(count($tags), 0);
+	}
+
+/**
+ * test Cleanuplink method
+ *
+ * @return void
+ */
+	public function testCleanupLink() {
+		$method = new ReflectionMethod($this->Tag, '_cleanupLink');
+		$method->setAccessible(true);
+
+		$result = $method->invoke($this->Tag, 'FakeModel', $blockId);
+
+
+
 	}
 
 }
